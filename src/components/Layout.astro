@@ -1,0 +1,105 @@
+---
+import "@fontsource-variable/inter/index.css";
+import "@fontsource-variable/bricolage-grotesque/index.css";
+import Navbar from "./Navbar.astro";
+import Footer from "./Footer.astro";
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "Boring Works",
+  description = "Boring Works gör små leadflöden svårare att tappa bort.",
+} = Astro.props;
+
+const canonicalURL = Astro.site
+  ? new URL(Astro.url.pathname, Astro.site).toString()
+  : Astro.url.toString();
+---
+
+<!doctype html>
+<html lang="sv">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+    <title>{title}</title>
+  </head>
+  <body class="min-h-screen bg-[#f7f7f2] text-zinc-950 antialiased">
+    <Navbar />
+    <slot />
+    <Footer />
+    <script>
+      const getPanelHeight = (panel: HTMLElement) => {
+        const inner = panel.querySelector("[data-collapsible-inner]");
+        return inner ? inner.scrollHeight : panel.scrollHeight;
+      };
+
+      const setTriggerIcon = (trigger: HTMLButtonElement) => {
+        const icon = trigger.querySelector("[data-collapsible-icon]");
+
+        if (!(icon instanceof HTMLElement)) {
+          return;
+        }
+
+        icon.textContent =
+          trigger.getAttribute("aria-expanded") === "true" ? "-" : "+";
+      };
+
+      const setPanelOpen = (
+        trigger: HTMLButtonElement,
+        panel: HTMLElement,
+        open: boolean,
+      ) => {
+        trigger.setAttribute("aria-expanded", String(open));
+        setTriggerIcon(trigger);
+
+        if (open) {
+          panel.dataset.collapsibleState = "open";
+          panel.style.maxHeight = "0px";
+          panel.offsetHeight;
+          panel.style.maxHeight = `${getPanelHeight(panel)}px`;
+          return;
+        }
+
+        panel.dataset.collapsibleState = "closed";
+        panel.style.maxHeight = `${getPanelHeight(panel)}px`;
+        panel.offsetHeight;
+        panel.style.maxHeight = "0px";
+      };
+
+      document.querySelectorAll("[data-collapsible]").forEach((section) => {
+        const trigger = section.querySelector("[data-collapsible-trigger]");
+        const panel = section.querySelector("[data-collapsible-panel]");
+
+        if (!(trigger instanceof HTMLButtonElement) || !(panel instanceof HTMLElement)) {
+          return;
+        }
+
+        const initiallyOpen = trigger.getAttribute("aria-expanded") === "true";
+        panel.dataset.collapsibleState = initiallyOpen ? "open" : "closed";
+        panel.style.maxHeight = initiallyOpen ? "none" : "0px";
+        setTriggerIcon(trigger);
+
+        panel.addEventListener("transitionend", (event) => {
+          if (event.target !== panel || event.propertyName !== "max-height") {
+            return;
+          }
+
+          if (trigger.getAttribute("aria-expanded") === "true") {
+            panel.style.maxHeight = "none";
+          }
+        });
+
+        trigger.addEventListener("click", () => {
+          const isOpen = trigger.getAttribute("aria-expanded") === "true";
+          setPanelOpen(trigger, panel, !isOpen);
+        });
+      });
+    </script>
+  </body>
+</html>

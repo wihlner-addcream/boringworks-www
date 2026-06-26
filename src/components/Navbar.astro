@@ -1,0 +1,22 @@
+---
+import Container from "./Container.astro";
+---
+
+<Container>
+  <header class="mt-12 my-7 flex flex-col items-center gap-5 sm:my-8">
+    <a href="/" class="inline-flex items-center justify-center" aria-label="Boring Works startsida">
+      <picture>
+        <source srcset="/images/boring-logo.webp" type="image/webp" />
+        <img
+          src="/images/boring-logo.png"
+          alt=""
+          class="mt-22 h-16 w-auto sm:h-20 md:h-38"
+          width="844"
+          height="442"
+          loading="eager"
+          decoding="async"
+        />
+      </picture>
+    </a>
+  </header>
+</Container>

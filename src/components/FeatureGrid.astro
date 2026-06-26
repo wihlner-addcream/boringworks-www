@@ -1,0 +1,31 @@
+---
+const features = [
+  "sparas i Google Sheets, Excel eller CRM",
+  "skickas till rätt person",
+  "bekräftas till kunden",
+  "följs upp med påminnelse",
+  "inkluderas i veckosammanställning",
+];
+---
+
+<section id="vad-vi-gor" class="mx-auto mt-20 max-w-3xl text-center">
+  <h2 class="mt-3 text-4xl font-bold tracking-tight text-zinc-950 lg:text-5xl">
+    Varje ny förfrågan
+  </h2>
+
+  <div class="mt-8 overflow-hidden rounded-lg border border-zinc-200 bg-white text-left shadow-sm shadow-zinc-200/70">
+    {
+      features.map((feature) => (
+        <div class="flex gap-4 border-b border-zinc-200 px-5 py-4 last:border-b-0">
+          <span class="mt-2 h-2.5 w-2.5 shrink-0 rounded-full bg-emerald-400" aria-hidden="true"></span>
+          <p class="text-lg font-semibold leading-7 text-zinc-800">{feature}</p>
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="mx-auto mt-8 max-w-2xl space-y-3 text-lg leading-8 text-zinc-700">
+    <p>Inget stort systemprojekt.</p>
+    <p>Bara mindre risk att varma leads blir liggande.</p>
+  </div>
+</section>

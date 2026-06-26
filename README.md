@@ -2,6 +2,9 @@
 
 Simple Astro/Tailwind site for [boringworks.se](https://boringworks.se).
 
+The current design uses an Astroship-inspired landing page direction:
+[surjithctly/astroship](https://github.com/surjithctly/astroship).
+
 ## Requirements
 
 - Node `>=22.12.0`
