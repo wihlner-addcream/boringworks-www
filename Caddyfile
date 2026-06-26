@@ -1,4 +1,4 @@
-boringworks.se {
+www.boringworks.se {
 	root * /var/www/boringworks.se/dist
 	encode zstd gzip
 	file_server
@@ -16,6 +16,6 @@ boringworks.se {
 	}
 }
 
-www.boringworks.se {
-	redir https://boringworks.se{uri} permanent
+boringworks.se {
+	redir https://www.boringworks.se{uri} permanent
 }
